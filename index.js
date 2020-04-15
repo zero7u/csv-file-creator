@@ -78,7 +78,7 @@ module.exports = function(fname, rows, onError){
 	try {
 	    var a = document.createElement('a');
 	    if (!('download' in a)) throw "a does not support download";
-            a.href = 'data:attachment/csv;charset=utf-8,' + _utf + encodeURIComponent(csvString);
+	    a.href = 'data:attachment/csv;charset=utf-8,' + _utf + encodeURIComponent(csvString);
 	    a.target = '_blank';
 	    // use class instead of id here -- PJB 2015.01.10
 	    a.class = 'dataURLdownloader';
