@@ -51,7 +51,7 @@ module.exports = function(fname, rows, onError){
      * without needing some kind of chunking to the block size of the device.
      */
 
-    var i, l, csvString='', errormsg='';
+    var i, l, csvString='', errormsg='', _utf = '\uFEFF';
     /* by creating a csvString representing csv file content
      * this code has the limitation that 2x the csv data must fit in memory
      */
@@ -61,7 +61,7 @@ module.exports = function(fname, rows, onError){
     if (window && window.navigator && window.navigator.msSaveOrOpenBlob) {
 	try {
 	    var blob = new Blob(
-		[decodeURIComponent(encodeURI(csvString))], {
+		[_utf + decodeURIComponent(encodeURI(csvString))], {
 		    type: "text/csv;charset=utf-8;"
 		});
 	    navigator.msSaveBlob(blob, fname);
@@ -78,7 +78,7 @@ module.exports = function(fname, rows, onError){
 	try {
 	    var a = document.createElement('a');
 	    if (!('download' in a)) throw "a does not support download";
-	    a.href = 'data:attachment/csv,'+encodeURIComponent(csvString);
+	    a.href = 'data:attachment/csv;charset=utf-8,' + _utf + encodeURIComponent(csvString);
 	    a.target = '_blank';
 	    // use class instead of id here -- PJB 2015.01.10
 	    a.class = 'dataURLdownloader';
